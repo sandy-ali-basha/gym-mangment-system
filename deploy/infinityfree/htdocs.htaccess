@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Keep Laravel public uploads accessible without exposing other private folders.
+RewriteRule ^storage/(.*)$ /storage/app/public/$1 [END]
+
+# Route all other requests through Laravel's public directory.
+RewriteRule (.*) /public/$1 [L]

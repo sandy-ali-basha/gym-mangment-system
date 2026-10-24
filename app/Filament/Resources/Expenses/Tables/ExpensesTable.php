@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Filament\Resources\Expenses\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class ExpensesTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('category')->label('الفئة')
+                    ->searchable(),
+                TextColumn::make('description')->label('الوصف')
+                    ->searchable(),
+                TextColumn::make('amount')->label('المبلغ')
+                    ->money('SYP', decimalPlaces: 0)
+                    ->sortable(),
+                TextColumn::make('incurred_at')->label('التاريخ')
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('payment_method')
+                    ->searchable(),
+                TextColumn::make('vendor')
+                    ->searchable(),
+                TextColumn::make('receipt_path')
+                    ->searchable(),
+                TextColumn::make('recordedBy.name')
+                    ->label('Recorded by')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}
